@@ -25,7 +25,7 @@ const showCountry = async() =>{
   <h6 class="card-title">${country.name}</h6>
   <p class="card-title">Capital: ${country.capital}</p>
   <p class="card-title">Population: ${country.population}</p>
-  <a href="./recettes.html" class="btn btn-primary">Taste our food </a>
+  <a href="/foods/html/foods.html" class="btn btn-primary">Taste our food </a>
 </div>
 </div>
 `
@@ -36,7 +36,7 @@ const showCountry = async() =>{
 showCountry()
 
 //INPUT SET UP
-searchInput.addEventListener('input', (e)=>{searchCountries = e.target.value 
+const pays = searchInput.addEventListener('input', (e)=>{searchCountries = e.target.value 
 showCountry()
 })
 

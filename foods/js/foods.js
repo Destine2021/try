@@ -8,61 +8,36 @@ let foods;
 let searchFoods = "";
 
 const fetchVideos = async () => {
-  foods = await fetch("https://youtube.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyAQkgr485aWEwosP_TeNu2Hvo3VFUiX6Gc&maxResults=10&type=video&q=congolesefoods&regionCode=CG")
-    .then(res => res.json())
+  const data = await fetch("https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=search_query=recette+de+cuisine+traditionnelle+africaine+&key=AIzaSyAQkgr485aWEwosP_TeNu2Hvo3VFUiX6Gc")
+  const foods = await data.json()
+  return foods
   console.log(foods);
 }
-
 const showFoods = async () => {
-  await fetchFoods();
+  const foods = await fetchVideos();
+  console.log(foods.items)
   resultat.innerHTML = (
-    foods
-      .filter(foodsVideo => foodsVideo.name.toLowerCase().includes(searchFoods.toLowerCase()
-      ))
-      .map(foodsVideo => (
-        `
-     <div id="card" style="width: 10rem; ">
-    <img src="${result[0].videoId}" class="card-img-top" alt="...">
-    <div class="card-body">
-     <h6 class="card-title">${result[0].title}</h6>
-     <p class="card-title">Population:  ${result[0].description}</p>
-     </div>
-   </div>
+    foods.items
+      //.filter(foodsVideo => foodsVideo.name.toLowerCase().includes(searchFoods.toLowerCase()
+      //))
+    .map(foodsVideo => (
+      `
+      <div id="frame" style="width: 10rem; ">
+      <iframe width="420" height="315"
+src=https://www.youtube.com/embed/${foodsVideo.id.videoId} >
+</iframe>
+             <div class="card-body">
+          <h6 class="card-title">${foodsVideo.snippet.title}</h6>
+          <p class="card-title"> ${foodsVideo.snippet.description}</p>
+        </div>
+      </div>
     `
     )).join("")
+  )
+}
+showFoods()
 
-    )
-   }
-   showFoods()
-   
-   //INPUT SET UP
-   searchInput.addEventListener('input', (e)=>{searchFoods = e.target.value 
-   showFoods()
-   })
-   
-
-// OPTION1 AVEC LA REQUETE REQUEST
-
-// var request = require('request');
-// const API = "https://youtube.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyAQkgr485aWEwosP_TeNu2Hvo3VFUiX6Gc&maxResults=10&type=video&q=congolesefoods&regionCode=CG"
-// request.get(API, function (err, res, body) {
-
-// var result = JSON.parse(body);
-//     console.log("title :", result[0].title);
-//     console.log("description :", result[0].description);
-//     console.log( result[0].videoId);
-//     console.log(err);
-//     console.log(res.statusCode);
-//     console.log(body);
-
-//     `
-// <div id="card" style="width: 10rem; ">
-// <img src="${result[0].videoId}" class="card-img-top" alt="...">
-// <div class="card-body">
-//   <h6 class="card-title">${result[0].title}</h6>
-//   <p class="card-title">Capital: ${country.capital}</p>
-//   <p class="card-title">Population:  ${result[0].description}</p>
-//   </div>
-// </div>
-// ` 
-// });
+//INPUT SET UP
+searchInput.addEventListener('input', (e)=>{searchFoods = e.target.value 
+  showFoods()
+  })
