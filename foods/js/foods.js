@@ -7,8 +7,8 @@ const resultatInput = document.getElementById('resultat')
 let foods;
 let searchFoods = "";
 
-const fetchVideos = async () => {
-  const data = await fetch("https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=search_query=recette+de+cuisine+traditionnelle+africaine+&key=AIzaSyAQkgr485aWEwosP_TeNu2Hvo3VFUiX6Gc")
+const fetchVideos = async (channelId) => {
+  const data = await fetch(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&maxResults=20&key=AIzaSyAQkgr485aWEwosP_TeNu2Hvo3VFUiX6Gc`)
   const foods = await data.json()
   return foods
   console.log(foods);
@@ -27,7 +27,7 @@ const showFoods = async () => {
 src=https://www.youtube.com/embed/${foodsVideo.id.videoId} >
 </iframe>
              <div class="card-body">
-          <h6 class="card-title">${foodsVideo.snippet.title}</h6>
+          <h6 class="card-title">${foodsVideo.snippet.channelTitle}</h6>
           <p class="card-title"> ${foodsVideo.snippet.description}</p>
         </div>
       </div>
